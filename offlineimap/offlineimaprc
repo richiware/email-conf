@@ -1,0 +1,43 @@
+[general]
+metadata = ~/.mail/offlineimap
+pythonfile = ~/.mail/offlineimap/gnome-keyring-query.py
+ui = ttyui
+accounts = Personal
+
+[mbnames]
+enabled = yes
+filename = ~/.mail/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
+
+[Account Personal]
+localrepository = Personal-Local
+remoterepository = Personal-Remote
+postsynchook = notmuch new
+utf8foldernames = yes
+
+[Repository Personal-Local]
+type = Maildir
+localfolders = ~/.mail/mail/Personal
+
+## Remove GMAIL prefix on Google-specific IMAP folders that are pulled down.
+nametrans = lambda f: '[Gmail]/' + f if f in ['Borradores', 'Destacados', 'Importantes', 'Spam', 'Papelera', 'Todos', 'Enviados'] else f
+
+[Repository Personal-Remote]
+type = IMAP
+remotehost = imap.gmail.com
+remoteuser = correoricky@gmail.com
+remotepasseval = get_password("personal_gmail", "password")
+ssl = yes
+starttls = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+#auth_mechanisms = XOAUTH2
+#oauth2_client_id = get_password("offlineimap", "personal_client_id")
+#oauth2_client_secret = get_password("offlineimap", "personal_client_secret")
+#oauth2_request_url = https://accounts.google.com/o/oauth2/token
+#oauth2_refresh_token = get_password("offlineimap", "personal_refresh_token")
+
+## remove Gmail prefix on IMAP folders
+nametrans = lambda f: f.replace('[Gmail]/', '') if f.startswith('[Gmail]/') else f
