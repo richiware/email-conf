@@ -1,0 +1,115 @@
+# vim: ft=muttrc
+set folder = ~/.mail/mail
+
+# Main options -----------------------------------
+set timeout=1800
+set sleep_time = 0  # be fast
+set copy  # save copies of sent messages
+set delete  # don't ask, just do
+unset confirmappend  # don't ask, just do!
+set quit=ask-yes # ask if i want to quit
+set postpone=ask-yes # save as draft? yes by default
+set wait_key=no
+unset mark_old
+set help=no # remove the help top bar
+
+# Directories and commands
+set header_cache = ~/.mail/cache/headers
+set message_cachedir = ~/mail/cache/bodies
+set print_command = "muttprint"
+
+# Regexps ----------------------------------------
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+
+# Index ------------------------------------------
+set sort=threads
+set sort_aux=last-date-received  # last received email at bottom
+# unset collapse_unread  # don't collapse threads with unread mails
+set sort_re  # thread based on regex
+set uncollapse_jump  # don't collapse on an unread message
+set index_format = "%S   %D   %-20.20F %?y?[%.20Y] ?%s %> %4c"
+#set index_format = "%4C %Z %{%b %d} %-15.15L (%4c) %s"
+
+# Pager ------------------------------------------
+set pager_index_lines=9  # how many lines from the index to show
+set pager_context=4      # no. of lines of context to give when scrolling message
+set menu_scroll
+set smart_wrap
+unset markers  # no ugly plus signs
+set display_filter="t-prot -cemt --bigq  -S 8 -M mutt-kz --pgp-move --pgp-short"  # hides quotes that are too long, delete insanely long signatures  and move gpg output bottom
+
+## Displaying html emails
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+set mailcap_path = ~/.mutt/mailcap
+
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+
+# Formats ----------------------------------------
+set date_format = "%Y-%m-%d %a %R"
+set folder_format="%2C %t %N %f %> %4s %d"
+
+## Headers
+ignore *
+unignore from: to: cc: bcc: date: subject:
+unhdr_order *
+hdr_order Date From To Cc Bcc X-Label Message-ID Subject
+
+# New message ------------------------------------
+set editor = "nvim -c 'set spell spelllang=es,en' -c 'set filetype=mail' -c 'norm}'"
+set edit_headers # edit the headers in the email editor
+set envelope_from
+set sig_dashes=no
+set fast_reply
+set askcc=no
+set fcc_attach
+set reply_self  # Removes me from list when replying
+unset mime_forward  # forward attachments as part of body
+set forward_format = "[Fwd] %s"  # format for subject when forwarding
+set forward_decode  # decode when forwarding
+set mime_forward=yes
+set mime_forward_rest=yes
+set attribution="↪ %D, %n <%a>:"  # Attribution quoted email
+set reverse_name  # reply as whomever it was to
+set include
+set forward_quote
+set rfc2047_parameters=yes
+
+# Colors
+source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
+# messages which mention my name in the body
+color index         yellow        default        "~b \"ricardo|@richiware|@ricardogonzalez\" !~N !~T !~F !~p !~P"
+color index         magenta         magenta        "~b \"ricardo|@richiware|@ricardogonzalez\" ~N !~T !~F !~p !~P"
+color index         yellow        cyan         "~b \"ricardo|@richiware|@ricardogonzalez\" ~T !~F !~p !~P"
+color index         yellow        magenta        "~b \"ricardo|@richiware|@ricardogonzalez\" ~F !~p !~P"
+#color index         yellow          default         "~b \"phil(_g|\!| gregory| gold)|pgregory\" !~N !~T !~F !~p !~P"
+#color index         J_cream         brightwhite     "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~N !~T !~F !~p !~P"
+#color index         yellow          cyan            "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~T !~F !~p !~P"
+#color index         yellow          J_magent        "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~F !~p !~P"
+source ~/.mutt/sidebar.muttrc
+
+#Personal account
+## Default account
+source ~/.mutt/accounts/personal
+folder-hook personal source ~/.mutt/accounts/personal
+
+# Mailboxes
+#mailboxes `find ~/.mail/ -type d -name cur -printf '%h ' | sed  's+ [^/]+\\ +'`
+source ~/.mail/mailboxes
+
+set query_command= "khard email --search-in-source-files --parsable '%s'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+bind pager j next-line
+bind pager k previous-line
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager g top
+bind pager G bottom
+bind attach,index g first-entry
+bind attach,index G last-entry
+set charset = "utf-8"

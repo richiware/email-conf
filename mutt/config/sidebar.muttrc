@@ -1,0 +1,32 @@
+# vim: ft=muttrc
+
+set sidebar_visible = yes
+set sidebar_width = 30
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+# Move the highlight to the previous mailbox
+bind index,pager \CP sidebar-prev
+# Move the highlight to the next mailbox
+bind index,pager \CN sidebar-next
+# Open the highlighted mailbox
+bind index,pager \CO sidebar-open
+# Move the highlight to the previous page
+# This is useful if you have a LOT of mailboxes.
+bind index,pager <F3> sidebar-page-up
+# Move the highlight to the next page
+# This is useful if you have a LOT of mailboxes.
+bind index,pager <F4> sidebar-page-down
+# Move the highlight to the previous mailbox containing new, or flagged,
+# mail.
+bind index,pager <F5> sidebar-prev-new
+# Move the highlight to the next mailbox containing new, or flagged, mail.
+bind index,pager <F6> sidebar-next-new
+# Toggle the visibility of the Sidebar.
+bind index,pager B sidebar-toggle-visible
+
+color indicator cyan default
+# Color to give mailboxes containing flagged mail
+color sidebar_flagged red default
+# Color to give mailboxes containing new mail
+color sidebar_new green default
+# Color to give mailboxes containing no new/flagged mail, etc.
+color sidebar_ordinary color245 default

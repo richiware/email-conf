@@ -1,0 +1,15 @@
+# vim: ft=muttrc
+
+set mbox_type = Maildir
+set from = "correoricky@gmail.com"
+set sendmail = "/usr/bin/msmtp -a personal"
+set spoolfile = "+Personal/INBOX"
+set mbox = "+Personal/INBOX"
+set postponed = "+Personal/Borradores"
+set record = "+Personal/Enviados"
+
+color status green default
+
+macro index D "<save-message>+Personal/Papelera<enter>" "move message to the trash"
+macro index S  "<save-message>+Personal/Spam<enter>"  "mark message as spam"
+
