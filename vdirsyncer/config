@@ -1,0 +1,21 @@
+[general]
+# A folder where vdirsyncer can store some metadata about each pair.
+status_path = "~/.vdirsyncer/status/"
+
+# Personal contacts
+[pair personal_contacts]
+a = "personal_contacts_local"
+b = "personal_google_contacts_remote"
+collections = ["from a", "from b"]
+metadata = ["displayname"]
+
+[storage personal_contacts_local]
+type = "filesystem"
+path = "~/.contacts/personal/"
+fileext = ".vcf"
+
+[storage personal_google_contacts_remote]
+type = "google_contacts"
+client_id.fetch = ["command", "keyring", "get", "vdirsyncer", "personal_client_id"]
+client_secret.fetch = ["command", "keyring", "get", "vdirsyncer", "personal_client_secret"]
+token_file = "~/.vdirsyncer/personal_google_contacts_tokens"
