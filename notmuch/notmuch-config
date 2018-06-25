@@ -1,0 +1,17 @@
+[database]
+path=/home/ricardo/.mail/mail
+
+[user]
+name=Ricardo González
+primary_email=correoricky@gmail.com
+other_email=ricardogonzalez@eprosima.com
+
+[new]
+tags=new;inbox
+ignore=
+
+[search]
+exclude_tags=deleted;spam;ignore;junk;
+
+[maildir]
+synchronize_flags=true

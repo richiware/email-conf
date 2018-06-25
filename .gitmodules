@@ -1,0 +1,3 @@
+[submodule "thirdparty/notifymuch"]
+	path = thirdparty/notifymuch
+	url = https://github.com/kspi/notifymuch.git
