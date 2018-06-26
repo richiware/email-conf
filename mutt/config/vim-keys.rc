@@ -1,0 +1,134 @@
+#------------------------------------------------------------
+# Vi Key Bindings and Macrod
+#------------------------------------------------------------
+
+# alias   - alias menu displaying suggested aliases
+# browser - file/directory browser
+# editor  - single line editor for `To:', `Subject:' prompts.
+# index   - the main menu showing messages in a folder
+# pager   - where the contents of the message are displayed
+# query   - menu displaying results of query command
+
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
+# Moving around
+bind attach,browser,index       g   noop
+bind attach,browser,index       gg  first-entry
+bind attach,browser,index       G   last-entry
+bind pager                      g  noop
+bind pager                      gg  top
+bind pager                      G   bottom
+bind pager                      k   previous-line
+bind pager                      j   next-line
+
+# Scrolling
+bind attach,browser,pager,index \CF next-page
+bind attach,browser,pager,index \CB previous-page
+bind attach,browser,pager,index \Cu half-up
+bind attach,browser,pager,index \Cd half-down
+bind browser,pager              \Ce next-line
+bind browser,pager              \Cy previous-line
+bind index                      \Ce next-line
+bind index                      \Cy previous-line
+
+bind pager,index                d   noop
+bind pager,index                dd  delete-message
+
+# Mail & Reply
+#bind index                      \Cm list-reply # Doesn't work currently
+
+# Threads
+bind browser,pager,index        N   search-opposite
+bind pager,index                dT  delete-thread
+bind pager,index                dt  delete-subthread
+bind pager,index                gt  next-thread
+bind pager,index                gT  previous-thread
+bind index                      za  collapse-thread
+bind index                      zA  collapse-all # Missing :folddisable/foldenable
+
+
+# Unbind some defaults.
+bind index <esc>V noop
+bind index <esc>v noop
+bind index \Cn noop
+bind index \Cp noop
+
+bind alias,index,browser,query G last-entry
+bind pager G bottom
+
+bind alias,index,browser,query gg first-entry
+bind pager gg top
+
+bind alias,index,pager,browser,query \Cd half-down
+bind alias,index,pager,browser,query \Cu half-up
+
+bind index <esc><space> collapse-all
+bind index <space> collapse-thread
+
+bind index n search-next
+bind index p search-opposite
+
+bind index { previous-thread
+bind pager { half-up
+
+bind index } next-thread
+bind pager } half-down
+
+bind index,pager A create-alias
+bind index,pager a group-reply
+
+# Skip trash when deleting with the delete key.
+bind index,pager <delete> purge-message
+
+# Readline-like history browsing using up/down keys.
+bind editor <up> history-up
+bind editor <down> history-down
+
+# Convenient macros to switch between common folders.  Also tells me what other
+# folders have new mail once I make a switch.
+macro index,pager ,d "<change-folder>$postponed<enter><buffy-list>" "open drafts"
+macro index,pager ,i "<change-folder>$spoolfile<enter><buffy-list>" "open inbox"
+macro index,pager ,j "<change-folder>+spam<enter><buffy-list>"      "open junk mail (spam)"
+macro index,pager ,r "<change-folder>^<enter><buffy-list>"          "refresh folder"
+macro index,pager ,s "<change-folder>$record<enter><buffy-list>"    "open sent mail"
+macro index,pager ,t "<change-folder>$trash<enter><buffy-list>"     "open trash"
+
+# I use this whenever I know that a folder hook is acting and I just want the
+# message to go to the default save folder.
+macro index,pager I "<save-message><enter>" "save message to default folder without confirming"
+
+# Limit messages quickly using ' + key.
+macro index \'d  "<limit>~D<enter>"       "limit to deleted messages"
+macro index \'f  "<limit>~F<enter>"       "limit to flagged messages"
+macro index \'l  "<limit>~=<enter>"       "limit to duplicate messages"
+macro index \'n  "<limit>~N|~O<enter>"    "limit to new messages"
+macro index \'p  "<limit>~g|~G<enter>"    "limit to signed or encrypted messages"
+macro index \'u  "<limit>!~Q<enter>"      "limit to unreplied messages"
+macro index \'\' "<limit>~A<enter>"       "reset all limits"
+
+# Toggle the mailbox list with "y".
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+bind browser y exit
+
+# Call extract_url with Ctrl + B.
+macro index,pager ,b "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+  <enter-command> unset pipe_decode<enter>\
+  <pipe-message>extract_url<enter>\
+  <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
+
+macro index,pager ,B "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+  <enter-command> set pipe_decode<enter>\
+  <pipe-message>extract_url<enter>\
+  <enter-command> set pipe_decode=\$my_pdsave<enter>" "decrypt message, then get URLs"
+
+message-hook .  'macro index,pager \Cb ,b "URL viewer"'
+message-hook ~G 'macro index,pager \Cb ,B "URL viewer"'
+
+# Pipe message to pbcopy with Ctrl + Y.  pipe_decode will ensure that
+# unnecessary headers are removed and the message is processed.
+macro index,pager,attach,compose \cy                                            \
+  "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<Enter>           \
+  <pipe-message>gpaste-client<Enter>                                            \
+  <enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
+  "copy message to clipboard using gpaste"

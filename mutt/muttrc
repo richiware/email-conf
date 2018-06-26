@@ -28,7 +28,6 @@ set sort_aux=last-date-received  # last received email at bottom
 # unset collapse_unread  # don't collapse threads with unread mails
 set sort_re  # thread based on regex
 set uncollapse_jump  # don't collapse on an unread message
-set index_format = "%S   %D   %-20.20F %?y?[%.20Y] ?%s %> %4c"
 #set index_format = "%4C %Z %{%b %d} %-15.15L (%4c) %s"
 
 # Pager ------------------------------------------
@@ -41,7 +40,7 @@ set display_filter="t-prot -cemt --bigq  -S 8 -M mutt-kz --pgp-move --pgp-short"
 
 ## Displaying html emails
 auto_view text/html
-alternative_order text/plain text/enriched text/html
+alternative_order text/enriched text/html text/plain
 set mailcap_path = ~/.mutt/mailcap
 
 # Status Bar -----------------------------------------
@@ -52,6 +51,7 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 # Formats ----------------------------------------
 set date_format = "%Y-%m-%d %a %R"
 set folder_format="%2C %t %N %f %> %4s %d"
+set index_format = "%S   %D   %-20.20F %?y?[%.20Y] ?%s %> %4c"
 
 ## Headers
 ignore *
@@ -60,7 +60,7 @@ unhdr_order *
 hdr_order Date From To Cc Bcc X-Label Message-ID Subject
 
 # New message ------------------------------------
-set editor = "nvim -c 'set spell spelllang=es,en' -c 'set filetype=mail' -c 'norm}'"
+set editor = "nvim -c 'set spell spelllang=es,en' -c 'set filetype=mail' -c 'norm}' -c 'set fo+=aw' -c 'set tw=74'"
 set edit_headers # edit the headers in the email editor
 set envelope_from
 set sig_dashes=no
@@ -79,17 +79,12 @@ set include
 set forward_quote
 set rfc2047_parameters=yes
 
+# Keys
+source ~/.mutt/vim-keys.rc
+
 # Colors
 source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
-# messages which mention my name in the body
-color index         yellow        default        "~b \"ricardo|@richiware|@ricardogonzalez\" !~N !~T !~F !~p !~P"
-color index         magenta         magenta        "~b \"ricardo|@richiware|@ricardogonzalez\" ~N !~T !~F !~p !~P"
-color index         yellow        cyan         "~b \"ricardo|@richiware|@ricardogonzalez\" ~T !~F !~p !~P"
-color index         yellow        magenta        "~b \"ricardo|@richiware|@ricardogonzalez\" ~F !~p !~P"
-#color index         yellow          default         "~b \"phil(_g|\!| gregory| gold)|pgregory\" !~N !~T !~F !~p !~P"
-#color index         J_cream         brightwhite     "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~N !~T !~F !~p !~P"
-#color index         yellow          cyan            "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~T !~F !~p !~P"
-#color index         yellow          J_magent        "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~F !~p !~P"
+
 source ~/.mutt/sidebar.muttrc
 
 #Personal account
@@ -102,14 +97,5 @@ folder-hook personal source ~/.mutt/accounts/personal
 source ~/.mail/mailboxes
 
 set query_command= "khard email --search-in-source-files --parsable '%s'"
-bind editor <Tab> complete-query
-bind editor ^T    complete
-bind pager j next-line
-bind pager k previous-line
-bind attach,index,pager \CD next-page
-bind attach,index,pager \CU previous-page
-bind pager g top
-bind pager G bottom
-bind attach,index g first-entry
-bind attach,index G last-entry
 set charset = "utf-8"
+set text_flowed = yes

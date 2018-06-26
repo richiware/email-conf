@@ -8,8 +8,8 @@ set mbox = "+Personal/INBOX"
 set postponed = "+Personal/Borradores"
 set record = "+Personal/Enviados"
 
-color status green default
+color status cyan default
 
-macro index D "<save-message>+Personal/Papelera<enter>" "move message to the trash"
+macro index dd "<save-message>+Personal/Papelera<enter>" "move message to the trash"
 macro index S  "<save-message>+Personal/Spam<enter>"  "mark message as spam"
 

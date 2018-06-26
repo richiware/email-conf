@@ -23,10 +23,9 @@ bind index,pager <F6> sidebar-next-new
 # Toggle the visibility of the Sidebar.
 bind index,pager B sidebar-toggle-visible
 
-color indicator cyan default
 # Color to give mailboxes containing flagged mail
 color sidebar_flagged red default
 # Color to give mailboxes containing new mail
-color sidebar_new green default
+color sidebar_new blue default
 # Color to give mailboxes containing no new/flagged mail, etc.
-color sidebar_ordinary color245 default
+color sidebar_ordinary brightgreen default
