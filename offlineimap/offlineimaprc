@@ -2,12 +2,12 @@
 metadata = ~/.mail/offlineimap
 pythonfile = ~/.mail/offlineimap/gnome-keyring-query.py
 ui = ttyui
-accounts = Personal
+accounts = Personal, eProsima
 
 [mbnames]
 enabled = yes
 filename = ~/.mail/mailboxes
-header = "mailboxes "
+header = "" # "mailboxes "
 peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
 footer = "\n"
@@ -38,6 +38,36 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 #oauth2_client_secret = get_password("offlineimap", "personal_client_secret")
 #oauth2_request_url = https://accounts.google.com/o/oauth2/token
 #oauth2_refresh_token = get_password("offlineimap", "personal_refresh_token")
+
+## remove Gmail prefix on IMAP folders
+nametrans = lambda f: f.replace('[Gmail]/', '') if f.startswith('[Gmail]/') else f
+
+[Account eProsima]
+localrepository = eProsima-Local
+remoterepository = eProsima-Remote
+postsynchook = notmuch new
+utf8foldernames = yes
+
+[Repository eProsima-Local]
+type = Maildir
+localfolders = ~/.mail/mail/eProsima
+
+## Remove GMAIL prefix on Google-specific IMAP folders that are pulled down.
+nametrans = lambda f: '[Gmail]/' + f if f in ['Borradores', 'Destacados', 'Importantes', 'Spam', 'Papelera', 'Todos', 'Enviados'] else f
+
+[Repository eProsima-Remote]
+type = IMAP
+remotehost = imap.gmail.com
+remoteuser = ricardogonzalez@eprosima.com
+remotepasseval = get_password("eprosima_gmail", "password")
+ssl = yes
+starttls = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+#auth_mechanisms = XOAUTH2
+#oauth2_client_id = get_password("offlineimap", "eprosima_client_id")
+#oauth2_client_secret = get_password("offlineimap", "eprosima_client_secret")
+#oauth2_request_url = https://accounts.google.com/o/oauth2/token
+#oauth2_refresh_token = get_password("offlineimap", "eprosima_refresh_token")
 
 ## remove Gmail prefix on IMAP folders
 nametrans = lambda f: f.replace('[Gmail]/', '') if f.startswith('[Gmail]/') else f

@@ -60,7 +60,8 @@ unhdr_order *
 hdr_order Date From To Cc Bcc X-Label Message-ID Subject
 
 # New message ------------------------------------
-set editor = "nvim -c 'set spell spelllang=es,en' -c 'set filetype=mail' -c 'norm}' -c 'set fo+=aw' -c 'set tw=74'"
+set editor = "nvim -c 'set spell spelllang=es,en' -c 'set filetype=mail' -c 'norm}' -c 'set fo+=aw'" # -c 'set tw=74'"
+set autoedit=yes
 set edit_headers # edit the headers in the email editor
 set envelope_from
 set sig_dashes=no
@@ -92,9 +93,12 @@ source ~/.mutt/sidebar.muttrc
 source ~/.mutt/accounts/personal
 folder-hook personal source ~/.mutt/accounts/personal
 
+#eProsima account
+folder-hook eprosima source ~/.mutt/accounts/eprosima
+
 # Mailboxes
 #mailboxes `find ~/.mail/ -type d -name cur -printf '%h ' | sed  's+ [^/]+\\ +'`
-source ~/.mail/mailboxes
+#source ~/.mail/mailboxes
 
 set query_command= "khard email --search-in-source-files --parsable '%s'"
 set charset = "utf-8"

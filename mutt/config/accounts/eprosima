@@ -1,0 +1,25 @@
+# vim: ft=muttrc
+
+set mbox_type = Maildir
+set from = "ricardogonzalez@eprosima.com"
+set sendmail = "/usr/bin/msmtp -a eprosima"
+set spoolfile = "+eProsima/INBOX"
+set mbox = "+eProsima/INBOX"
+set postponed = "+eProsima/Borradores"
+set record = "+eProsima/Enviados"
+set trash = "+eProsima/Papelera"
+
+color status cyan default
+
+macro index,pager ,u '<enter-command>source ~/.mutt/accounts/personal<enter><change-folder>!<enter>'
+macro index dd "<save-message>$trash<enter>" "move message to the trash"
+macro index S  "<save-message>+eProsima/Spam<enter>"  "mark message as spam"
+macro index,pager gd "<change-folder>$postponed<enter><buffy-list>" "open drafts"
+macro index,pager gi "<change-folder>$spoolfile<enter><buffy-list>" "open inbox"
+macro index,pager gs "<change-folder>+eProsima/Spam<enter><buffy-list>"    "open junk mail (spam)"
+macro index,pager ge "<change-folder>$record<enter><buffy-list>"    "open sent mail"
+macro index,pager gp "<change-folder>$trash<enter><buffy-list>"     "open trash"
+
+# Remove Personal mailboxes
+unmailboxes *
+mailboxes `cat ~/.mail/mailboxes | sed "s/\"+Personal\/[^\"]*\"//g"`

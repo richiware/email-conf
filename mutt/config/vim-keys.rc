@@ -87,12 +87,7 @@ bind editor <down> history-down
 
 # Convenient macros to switch between common folders.  Also tells me what other
 # folders have new mail once I make a switch.
-macro index,pager ,d "<change-folder>$postponed<enter><buffy-list>" "open drafts"
-macro index,pager ,i "<change-folder>$spoolfile<enter><buffy-list>" "open inbox"
-macro index,pager ,j "<change-folder>+spam<enter><buffy-list>"      "open junk mail (spam)"
-macro index,pager ,r "<change-folder>^<enter><buffy-list>"          "refresh folder"
-macro index,pager ,s "<change-folder>$record<enter><buffy-list>"    "open sent mail"
-macro index,pager ,t "<change-folder>$trash<enter><buffy-list>"     "open trash"
+macro index,pager gr "<change-folder>^<enter><buffy-list>"          "refresh folder"
 
 # I use this whenever I know that a folder hook is acting and I just want the
 # message to go to the default save folder.
