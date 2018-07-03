@@ -127,3 +127,6 @@ macro index,pager,attach,compose \cy                                            
   <pipe-message>gpaste-client<Enter>                                            \
   <enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
   "copy message to clipboard using gpaste"
+
+#macro compose \eh "F pandoc -s -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"
+macro compose \eh "TF mutt-html-attach\nya/tmp/mutt-html-attach\n^T^Utext/html; charset=utf-8\nyT&"

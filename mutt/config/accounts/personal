@@ -6,13 +6,15 @@ set sendmail = "/usr/bin/msmtp -a personal"
 set spoolfile = "+Personal/INBOX"
 set mbox = "+Personal/INBOX"
 set postponed = "+Personal/Borradores"
-set record = "+Personal/Enviados"
+#set record = "+Personal/INBOX"
+unset record
 set trash = "+Personal/Papelera"
+
+my_hdr Bcc: $from
 
 color status magenta default
 
 macro index,pager ,u '<enter-command>source ~/.mutt/accounts/eprosima<enter><change-folder>!<enter>'
-macro index dd "<save-message>$trash<enter>" "move message to the trash"
 macro index S  "<save-message>+Personal/Spam<enter>"  "mark message as spam"
 macro index,pager gd "<change-folder>$postponed<enter><buffy-list>" "open drafts"
 macro index,pager gi "<change-folder>$spoolfile<enter><buffy-list>" "open inbox"
@@ -23,3 +25,5 @@ macro index,pager gp "<change-folder>$trash<enter><buffy-list>"     "open trash"
 # Remove eProsima mailboxes
 unmailboxes *
 mailboxes `cat ~/.mail/mailboxes | sed "s/\"+eProsima\/[^\"]*\"//g"`
+
+push <next-new-then-unread>

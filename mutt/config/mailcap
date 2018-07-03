@@ -1,2 +1,4 @@
 text/html; w3m -I %{charset} -T text/html;
 text/html; /usr/bin/w3m -dump -s -o display_link=yes -o display_link_number=yes -o decode_url=yes -T text/html -I %{charset}; copiousoutput; description=HTML Text
+
+application/pdf; zathura %s;

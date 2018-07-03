@@ -2,7 +2,7 @@
 set folder = ~/.mail/mail
 
 # Main options -----------------------------------
-set timeout=1800
+set timeout=10
 set sleep_time = 0  # be fast
 set copy  # save copies of sent messages
 set delete  # don't ask, just do
@@ -27,6 +27,7 @@ set sort=threads
 set sort_aux=last-date-received  # last received email at bottom
 # unset collapse_unread  # don't collapse threads with unread mails
 set sort_re  # thread based on regex
+set collapse_all = yes
 set uncollapse_jump  # don't collapse on an unread message
 #set index_format = "%4C %Z %{%b %d} %-15.15L (%4c) %s"
 
@@ -40,7 +41,7 @@ set display_filter="t-prot -cemt --bigq  -S 8 -M mutt-kz --pgp-move --pgp-short"
 
 ## Displaying html emails
 auto_view text/html
-alternative_order text/enriched text/html text/plain
+alternative_order text/enriched text/plain text/html
 set mailcap_path = ~/.mutt/mailcap
 
 # Status Bar -----------------------------------------

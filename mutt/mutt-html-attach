@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cat - > /tmp/mutt-html-attach.tmp
+
+pandoc -s -f markdown -t html -o /tmp/mutt-html-attach /tmp/mutt-html-attach.tmp
+pandoc -s -f markdown -t plain /tmp/mutt-html-attach.tmp

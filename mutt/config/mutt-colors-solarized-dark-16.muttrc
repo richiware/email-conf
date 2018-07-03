@@ -19,7 +19,7 @@ color attachment    white           default
 color search        brightmagenta   default         
 #color status        J_black         J_status        
 color status        brightyellow    black           
-color indicator     brightblack     yellow          
+color indicator     brightblack     green          
 color tree          yellow          default                                     # arrow in threads
 
 # basic monocolor screen
@@ -28,26 +28,38 @@ mono  underline     underline
 mono  indicator     reverse
 mono  error         bold
 
+# Richi: notes.
+## Foreground colors:
+### brightgreen: default color.
+### red: flagged messages.
+### cyan: new and unread messages.
+### blue: new and unread messages to me.
+### brightblue: messages from me.
+### brightmagenta unread and flags
+## Background colors:
+### yellow: messages to me or where i mentioned.
+### red: delete messages
+### black: collapsed thread.
+### magent: collapsed thread with some for me.
+#
+### brigthred: expired messages.
+### brightmagenta: messages replied to.
+
 # index ----------------------------------------------------------------
 
-#color index         red             default         "~D(!~p|~p)"               # deleted
-#color index         black           default         ~F                         # flagged
-#color index         brightred       default         ~=                         # duplicate messages
-#color index         brightgreen     default         "~A!~N!~T!~p!~Q!~F!~D!~P"  # the rest
-#color index         J_base          default         "~A~N!~T!~p!~Q!~F!~D"      # the rest, new
 color index         brightgreen     default         "~A"                        # all messages
 color index         brightred       default         "~E"                        # expired messages
-color index         blue            default         "~N"                        # new messages
-color index         blue            default         "~O"                        # old messages
+color index         cyan            default         "~N"                        # new messages
+color index         cyan            default         "~O"                        # old messages
 color index         brightmagenta   default         "~Q"                        # messages that have been replied to
 color index         brightgreen     default         "~R"                        # read messages
-color index         blue            default         "~U"                        # unread messages
-color index         blue            default         "~U~$"                      # unread, unreferenced messages
+color index         cyan            default         "~U"                        # unread messages
+color index         cyan            default         "~U~$"                      # unread, unreferenced messages
 color index         brightgreen     black           "~v"                        # messages part of a collapsed thread
-color index         brightyellow    default         "~P"                        # messages from me
-color index         cyan            default         "~p!~F"                     # messages to me
-color index         cyan            default         "~N~p!~F"                   # new messages to me
-color index         cyan            default         "~U~p!~F"                   # unread messages to me
+color index         brightblue      default         "~P"                        # messages from me
+color index         brightgreen     default         "~p!~F"                     # messages to me
+color index         blue            default         "~N~p!~F"                   # new messages to me
+color index         blue            default         "~U~p!~F"                   # unread messages to me
 color index         brightgreen     default         "~R~p!~F"                   # messages to me
 color index         red             default         "~F"                        # flagged messages
 color index         red             default         "~F~p"                      # flagged messages to me
@@ -56,15 +68,16 @@ color index         red             default         "~N~F~p"                    
 color index         red             default         "~U~F~p"                    # new flagged messages to me
 color index         brightgreen     red             "~D"                        # deleted messages
 color index         brightgreen     black           "~v~(!~N)"                  # collapsed thread with no unread
-color index         blue            black           "~v~(~N)"                   # collapsed thread with some unread
+color index         cyan            black           "~v~(~N)"                   # collapsed thread with some unread
 color index         green           black           "~N~v~(~N)"                 # collapsed thread with unread parent
 # statusbg used to indicated flagged when foreground color shows other status
 # for collapsed thread
 color index         red             black           "~v~(~F)!~N"                # collapsed thread with flagged, no unread
-color index         yellow          black           "~v~(~F~N)"                 # collapsed thread with some unread & flagged
+color index         brightmagenta   black           "~v~(~F~N)"                 # collapsed thread with some unread & flagged
 color index         green           black           "~N~v~(~F~N)"               # collapsed thread with unread parent & flagged
 color index         green           black           "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
-color index         cyan            black           "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
+color index         blue            black           "~v~(~p~N)~N"                   # collapsed thread with unread parent, no unread inside, some to me directly
+color index         blue            black           "~v~(~p~N)!~N"                   # collapsed thread with unread parent, no unread inside, some to me directly
 color index         yellow          red             "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
 #color index         yellow          default         "~(~N)"                    # messages in threads with some unread
 #color index         green           default         "~S"                       # superseded messages
@@ -137,16 +150,25 @@ color body          red             default         "([a-z][a-z0-9+-]*://(((([a-
 
 # custom body highlights -----------------------------------------------
 # highlight my name and other personally relevant strings
-color body          yellow          default         "(ricardo|@richiware|@ricardogonzalez|ricardo gonzález)"
+color body          yellow        default         "ricardo(gonzalez| gonzalez| gonzález)|(@)richiware"
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
-color index         yellow        default      "~b '@richiware|@ricardogonzalez' !~N !~T !~F !~P"
-color index         yellow        blue         "~b '@richiware|@ricardogonzalez' ~N !~T !~F !~P"
-color index         yellow        magenta      "~b '@richiware|@ricardogonzalez' ~T !~F !~P"
-color index         yellow        brightred    "~b '@richiware|@ricardogonzalez' ~F !~P"
-color index         yellow        red          "~b '@richiware|@ricardogonzalez' ~D !~P"
-color index         yellow        default      "~b 'ricardo|richiware|ricardogonzalez|ricardo gonzález' !~N !~T !~F !~p !~P"
-color index         yellow        blue         "~b 'ricardo|richiware|ricardogonzalez|ricardo gonzález' ~N !~T !~F !~p !~P"
-color index         yellow        magenta      "~b 'ricardo|richiware|ricardogonzalez|ricardo gonzález' ~T !~F !~p !~P"
-color index         yellow        brightred    "~b 'ricardo|richiware|ricardogonzalez|ricardo gonzález' ~F !~p !~P"
-color index         yellow        red          "~b 'ricardo|richiware|ricardogonzalez|ricardo gonzález' ~D !~p !~P"
+## For github messages
+color index         brightgreen   yellow      "~b '@richiware' !~N !~T !~F !~P"
+color index         brightgreen   magenta     "~v~(~b '@richiware' !~N !~T !~F !~P)"
+color index         blue          yellow         "~b '@richiware' ~N !~T !~F !~P"
+color index         blue          magenta        "~v~(~b '@richiware' ~N !~T !~F !~P)"
+color index         magenta       yellow      "~b '@richiware' ~T !~F !~P"
+color index         magenta       magenta      "~v~(~b '@richiware' ~T !~F !~P)"
+color index         brightred     yellow    "~b '@richiware' ~F !~P"
+color index         brightred     magenta    "~v~(~b '@richiware' ~F !~P)"
+color index         yellow        red          "~b '@richiware' ~D !~P"
+color index         brightgreen   yellow      "~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' !~N !~T !~F !~p !~P"
+color index         brightgreen   magenta      "~v~(~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' !~N !~T !~F !~p !~P)"
+color index         blue          yellow         "~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~N !~T !~F !~p !~P"
+color index         blue          magenta         "~v~(~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~N !~T !~F !~p !~P)"
+color index         magenta       yellow      "~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~T !~F !~p !~P"
+color index         magenta       magenta      "~v~(~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~T !~F !~p !~P)"
+color index         brightred     yellow    "~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~F !~p !~P"
+color index         brightred     magenta    "~v~(~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~F !~p !~P)"
+color index         yellow        red          "~b 'ricardo(gonzalez| gonzalez| gonzález)|richiware' ~D !~p !~P"

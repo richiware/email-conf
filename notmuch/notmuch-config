@@ -7,7 +7,7 @@ primary_email=correoricky@gmail.com
 other_email=ricardogonzalez@eprosima.com
 
 [new]
-tags=new;inbox
+tags=new;unread;inbox
 ignore=
 
 [search]
