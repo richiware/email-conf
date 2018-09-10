@@ -130,3 +130,4 @@ macro index,pager,attach,compose \cy                                            
 
 #macro compose \eh "F pandoc -s -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"
 macro compose \eh "TF mutt-html-attach\nya/tmp/mutt-html-attach\n^T^Utext/html; charset=utf-8\nyT&"
+macro attach S "<pipe-message>mutt-save-attach"<enter>

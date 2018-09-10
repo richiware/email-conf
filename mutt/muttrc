@@ -104,3 +104,5 @@ folder-hook eprosima source ~/.mutt/accounts/eprosima
 set query_command= "khard email --search-in-source-files --parsable '%s'"
 set charset = "utf-8"
 set text_flowed = yes
+set mail_check_stats = yes
+set mail_check_stats_interval = 120

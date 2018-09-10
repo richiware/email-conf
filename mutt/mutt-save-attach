@@ -1,0 +1,3 @@
+#!/bin/sh
+ranger --choosefile=/tmp/mutt-save-attach
+cat > $"`cat /tmp/mutt-save-attach`"
