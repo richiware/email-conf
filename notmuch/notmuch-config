@@ -7,11 +7,11 @@ primary_email=correoricky@gmail.com
 other_email=ricardogonzalez@eprosima.com
 
 [new]
-tags=new;unread;inbox
+tags=new
 ignore=
 
 [search]
-exclude_tags=deleted;spam;ignore;junk;
+exclude_tags=deleted;spam;ignore;junk
 
 [maildir]
 synchronize_flags=true

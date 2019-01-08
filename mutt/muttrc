@@ -1,5 +1,8 @@
 # vim: ft=muttrc
+set mbox_type = Maildir
 set folder = ~/.mail/mail
+## Not store sent mails.
+unset record
 
 # Main options -----------------------------------
 set timeout=10
@@ -15,7 +18,8 @@ set help=no # remove the help top bar
 
 # Directories and commands
 set header_cache = ~/.mail/cache/headers
-set message_cachedir = ~/mail/cache/bodies
+set message_cachedir = ~/.mail/cache/bodies # Only used in IMAP/POP. Not used right now.
+set read_inc = 1000
 set print_command = "muttprint"
 
 # Regexps ----------------------------------------
@@ -26,10 +30,9 @@ set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 set sort=threads
 set sort_aux=last-date-received  # last received email at bottom
 # unset collapse_unread  # don't collapse threads with unread mails
-set sort_re  # thread based on regex
+#set sort_re  # thread based on regex
 set collapse_all = yes
 set uncollapse_jump  # don't collapse on an unread message
-#set index_format = "%4C %Z %{%b %d} %-15.15L (%4c) %s"
 
 # Pager ------------------------------------------
 set pager_index_lines=9  # how many lines from the index to show
@@ -41,7 +44,7 @@ set display_filter="t-prot -cemt --bigq  -S 8 -M mutt-kz --pgp-move --pgp-short"
 
 ## Displaying html emails
 auto_view text/html
-alternative_order text/enriched text/plain text/html
+alternative_order text/enriched text/plain  text/html
 set mailcap_path = ~/.mutt/mailcap
 
 # Status Bar -----------------------------------------
@@ -52,7 +55,7 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 # Formats ----------------------------------------
 set date_format = "%Y-%m-%d %a %R"
 set folder_format="%2C %t %N %f %> %4s %d"
-set index_format = "%S   %D   %-20.20F %?y?[%.20Y] ?%s %> %4c"
+set index_format = "%?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %D %-20.20F %?y?[%.20Y] ?%s %> %4c"
 
 ## Headers
 ignore *
@@ -91,15 +94,40 @@ source ~/.mutt/sidebar.muttrc
 
 #Personal account
 ## Default account
-source ~/.mutt/accounts/personal
-folder-hook personal source ~/.mutt/accounts/personal
+#source ~/.mutt/accounts/personal
+#folder-hook personal source ~/.mutt/accounts/personal
 
 #eProsima account
-folder-hook eprosima source ~/.mutt/accounts/eprosima
+#folder-hook eprosima source ~/.mutt/accounts/eprosima
 
 # Mailboxes
-#mailboxes `find ~/.mail/ -type d -name cur -printf '%h ' | sed  's+ [^/]+\\ +'`
-#source ~/.mail/mailboxes
+mailboxes `cat ~/.mail/mailboxes`
+
+# Virtual mailboxes
+set nm_default_uri = "notmuch:///home/$USER/.mail/mail"
+set nm_unread_tag = unread
+set virtual_spoolfile=yes # Enable virtual folders
+## Load virtual mailboxes
+source ~/.mailboxes
+## Substitute flags of neomutt by based on tags (%g).
+tag-transforms  "inbox"    "♠" \
+                "flagged"  "⌘" \
+                "unread"   "✉" \
+                "replied"  "↻" \
+                "sent"     "➥" \
+                "signed"   "✎" \
+                "todo"     "☑" \
+                "deleted"  "✗" \
+                "expenses" "€" \
+                "invites"  "CAL"
+
+tag-formats     "inbox"   "GI" \
+                "unread"  "GU" \
+                "replied" "GR" \
+                "sent"    "GS" \
+                "todo"    "Gt" \
+                "deleted" "GD" \
+                "invites" "Gi"
 
 set query_command= "khard email --search-in-source-files --parsable '%s'"
 set charset = "utf-8"

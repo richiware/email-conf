@@ -1,6 +1,6 @@
 [general]
 metadata = ~/.mail/offlineimap
-pythonfile = ~/.mail/offlineimap/gnome-keyring-query.py
+pythonfile = ~/.offlineimap/hooks/gnome-keyring-query.py
 ui = ttyui
 accounts = Personal, eProsima
 
@@ -15,7 +15,7 @@ footer = "\n"
 [Account Personal]
 localrepository = Personal-Local
 remoterepository = Personal-Remote
-postsynchook = notmuch new
+postsynchook = ~/.offlineimap/hooks/notmuch-hook.sh
 utf8foldernames = yes
 
 [Repository Personal-Local]
@@ -45,7 +45,7 @@ nametrans = lambda f: f.replace('[Gmail]/', '') if f.startswith('[Gmail]/') else
 [Account eProsima]
 localrepository = eProsima-Local
 remoterepository = eProsima-Remote
-postsynchook = notmuch new
+postsynchook = ~/.offlineimap/hooks/notmuch-hook.sh
 utf8foldernames = yes
 
 [Repository eProsima-Local]

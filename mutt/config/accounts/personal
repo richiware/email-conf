@@ -10,6 +10,7 @@ set postponed = "+Personal/Borradores"
 unset record
 set trash = "+Personal/Papelera"
 
+# When reply a email, I put myself in the Bcc to receive it.
 my_hdr Bcc: $from
 
 color status magenta default

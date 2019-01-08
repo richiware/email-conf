@@ -1,0 +1,28 @@
+#!/bin/sh
+
+COLUMNS=${COLUMNS:-`tput cols`}
+
+ranger --choosefile="$1/mutt-save-file" --choosedir="$1/mutt-save-dir" ~/
+
+if [ $? -ne 0 ]; then
+    return -1
+fi
+
+ATTACHFILE=`cat $1/mutt-save-file`
+ATTACHDIR=`cat $1/mutt-save-dir`
+
+if [ ! -z "$ATTACHFILE" ]; then
+
+    if [ -s $ATTACHFILE ]; then
+
+        dialog --begin 5 $(( $COLUMNS / 2 - 14 )) --yesno "Overwrite $ATTACHFILE?" 0 0
+
+        if [ $? -ne 0 ]; then
+            return -1
+        fi
+    fi
+
+    mv "$2" "$ATTACHFILE"
+elif [ ! -z "$ATTACHDIR" ]; then
+    mv "$2" "$ATTACHDIR"
+fi

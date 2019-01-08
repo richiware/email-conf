@@ -12,6 +12,10 @@
 bind editor <Tab> complete-query
 bind editor ^T    complete
 
+# Substitute "select-entry" to "view-mailcap". This is because my mailcap for text/plain not work otherwise.
+bind attach <Enter> view-mailcap
+bind attach <Return> view-mailcap
+
 # Moving around
 bind attach,browser,index       g   noop
 bind attach,browser,index       gg  first-entry
@@ -108,9 +112,9 @@ bind browser y exit
 
 # Call extract_url with Ctrl + B.
 macro index,pager ,b "<enter-command> set my_pdsave=\$pipe_decode<enter>\
-  <enter-command> unset pipe_decode<enter>\
-  <pipe-message>extract_url<enter>\
-  <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
+<enter-command> unset pipe_decode<enter>\
+<pipe-message>extract_url<enter>\
+<enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
 
 macro index,pager ,B "<enter-command> set my_pdsave=\$pipe_decode<enter>\
   <enter-command> set pipe_decode<enter>\
@@ -123,11 +127,18 @@ message-hook ~G 'macro index,pager \Cb ,B "URL viewer"'
 # Pipe message to pbcopy with Ctrl + Y.  pipe_decode will ensure that
 # unnecessary headers are removed and the message is processed.
 macro index,pager,attach,compose \cy                                            \
-  "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<Enter>           \
-  <pipe-message>gpaste-client<Enter>                                            \
-  <enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
-  "copy message to clipboard using gpaste"
+"<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
+<pipe-message>gpaste-client<Enter>\
+<enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>"\
+"copy message to clipboard using gpaste"
 
 #macro compose \eh "F pandoc -s -f markdown -t html \ny^T^Utext/html; charset=utf-8\n"
 macro compose \eh "TF mutt-html-attach\nya/tmp/mutt-html-attach\n^T^Utext/html; charset=utf-8\nyT&"
-macro attach S "<pipe-message>mutt-save-attach"<enter>
+
+# Save attach using ranger.
+lua-source ~/.mutt/scripts/mutt-utils.lua
+macro attach s "<enter-command>lua new_temp_dir()<enter><save-entry><enter>\
+<enter-command>lua save_temp_attach()<enter>"
+
+# Archive mails
+macro index A "<tag-thread><tag-prefix><modify-labels-then-hide>+archive -inbox<enter><sync-mailbox>" "Message was archived"

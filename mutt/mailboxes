@@ -1,0 +1,4 @@
+virtual-mailboxes "inbox" "notmuch://?query=tag:inbox&limit=1000"
+virtual-mailboxes "unread" "notmuch://?query=tag:unread"
+virtual-mailboxes "all" "notmuch://?query=not%20tag:archive"
+virtual-mailboxes "archive" "notmuch://?query=tag:archive"

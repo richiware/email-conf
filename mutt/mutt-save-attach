@@ -1,3 +1,19 @@
 #!/bin/sh
-ranger --choosefile=/tmp/mutt-save-attach
-cat > $"`cat /tmp/mutt-save-attach`"
+
+COLUMNS=${COLUMNS:-`tput cols`}
+SCRIPTDIR=$(dirname "$0")
+
+# Get the temporal attach file.
+TMPFILE="$1/`ls $1 | xargs`"
+
+if [ -e "$TMPFILE" ]; then
+    if [ -z "$TMUX" ]; then
+        bash -c "$SCRIPTDIR/mutt-ranger-select $1 \"$TMPFILE\""
+    elif [ "$COLUMNS" -gt 180 ]; then
+    tmux split-window -p 50 -h \
+        bash -c "$SCRIPTDIR/mutt-ranger-select $1 \"$TMPFILE\""
+    else
+    tmux split-window -p 50 -v \
+        bash -c "$SCRIPTDIR/mutt-ranger-select $1 \"$TMPFILE\""
+    fi
+fi
