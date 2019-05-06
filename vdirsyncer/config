@@ -37,3 +37,39 @@ type = "google_contacts"
 client_id.fetch = ["command", "keyring", "get", "vdirsyncer", "eprosima_client_id"]
 client_secret.fetch = ["command", "keyring", "get", "vdirsyncer", "eprosima_client_secret"]
 token_file = "~/.vdirsyncer/eprosima_google_contacts_tokens"
+
+# Personal calendar
+[pair personal_calendar]
+a = "personal_calendar_local"
+b = "personal_google_calendar_remote"
+collections = ["from a", "from b"]
+metadata = ["color"]
+
+[storage personal_calendar_local]
+type = "filesystem"
+path = "~/.calendar/personal/"
+fileext = ".ics"
+
+[storage personal_google_calendar_remote]
+type = "google_calendar"
+client_id.fetch = ["command", "keyring", "get", "vdirsyncer", "personal_client_id"]
+client_secret.fetch = ["command", "keyring", "get", "vdirsyncer", "personal_client_secret"]
+token_file = "~/.vdirsyncer/personal_google_calendar_tokens"
+
+# eProsima calendar
+[pair eprosima_calendar]
+a = "eprosima_calendar_local"
+b = "eprosima_google_calendar_remote"
+collections = ["from a", "from b"]
+metadata = ["color"]
+
+[storage eprosima_calendar_local]
+type = "filesystem"
+path = "~/.calendar/eprosima/"
+fileext = ".ics"
+
+[storage eprosima_google_calendar_remote]
+type = "google_calendar"
+client_id.fetch = ["command", "keyring", "get", "vdirsyncer", "eprosima_client_id"]
+client_secret.fetch = ["command", "keyring", "get", "vdirsyncer", "eprosima_client_secret"]
+token_file = "~/.vdirsyncer/eprosima_google_calendar_tokens"

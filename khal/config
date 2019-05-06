@@ -1,0 +1,17 @@
+[calendars]
+
+[[personal]]
+path = ~/.calendar/personal/*
+type = discover
+
+[[eprosima]]
+path = ~/.calendar/eprosima/*
+type = discover
+
+[default]
+timedelta = 7d
+highlight_event_days = true
+print_new = event
+
+[view]
+agenda_event_format = "{calendar-color}{cancelled}{start-end-time-style} {title}{repeat-symbol}{reset}"
